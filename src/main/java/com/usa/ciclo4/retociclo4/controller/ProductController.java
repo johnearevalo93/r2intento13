@@ -10,38 +10,37 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/cosmetics")
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET,
-        RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@RequestMapping("/api/cookware")
+@CrossOrigin("*")
 public class ProductController {
     @Autowired
-    private ProductService productService;
-
+    private ProductController accessoryService;
+    
     @GetMapping("/all")
-    public List<Product> getAll(){
-        return productService.getAll();
+    public List<ProductController> getAll() {
+        return accessoryService.getAll();
+    }
+    
+    @GetMapping("/{reference}")
+    public Optional<ProductController> getClothe(@PathVariable("reference") String reference) {
+        return accessoryService.getClothe(reference);
     }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@RequestBody Product product){
-        productService.save(product);
+    public ProductController create(@RequestBody ProductController gadget) {
+        return accessoryService.create(gadget);
     }
-
+    
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Product update(@RequestBody Product product){
-        return productService.update(product);
+    public ProductController update(@RequestBody ProductController gadget) {
+        return accessoryService.update(gadget);
     }
 
     @DeleteMapping("/{reference}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable("reference") String reference){
-        return  productService.delete(reference);
-    }
-
-    @GetMapping("/{reference}")
-    public Optional<Product> getProduct(@PathVariable("reference") String reference){
-        return productService.getProduct(reference);
-    }
+    public boolean delete(@PathVariable("reference") String reference) {
+        return accessoryService.delete(reference);
+    } 
 }
